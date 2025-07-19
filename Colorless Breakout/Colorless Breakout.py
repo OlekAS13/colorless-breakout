@@ -29,6 +29,7 @@ firstScreenCleared = False
 infiniteLives = False
 pointsVisible = 1
 settingsTextVisible = True
+totalBarHits = 0
 
 # statystyki
 points = 0
@@ -42,7 +43,7 @@ leftWallGlitch = "On"
 # elementy gry
 paddle = pygame.Rect(960, 1014, 45, 17) # rect paddle
 ball = pygame.Rect(960, 540, 13, 10) # rect ball
-wallTop = pygame.Rect(588, 0, 745, 35) # rect wallTop
+wallTop = pygame.Rect(573, 0, 775, 35) # rect wallTop
 wall = pygame.image.load("wall.png").convert_alpha() # image wallLeft i wallRight
 bar = pygame.Rect(585, 1014, 750, 17) # rect bar
 wallBottom = pygame.Rect(0, 1070, 1920, 10)
@@ -160,7 +161,7 @@ def startGame():
 
 # wyrzucenie pilki
 def throwBall():
-    global ballSpeed, ballAngle, ballAngleRad, ballVelX, ballVelY, ball, isBallOut, totalBallHits, speedMode, whichAngle
+    global ballSpeed, ballAngle, ballAngleRad, ballVelX, ballVelY, ball, isBallOut, totalBallHits, speedMode, whichAngle, totalBarHits
 
     isBallOut = False
     
@@ -169,6 +170,7 @@ def throwBall():
     speedMode = "paddle"
     ballSpeed = 4
     totalBallHits = 0
+    totalBarHits = 0
     
     whichAngle = random.randint(0, 1) # losowanie kata
 
@@ -201,7 +203,7 @@ def generateRedBricks():
             redBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect czerwonej cegly w oparciu o wyzej stworzone zmienne
             redBricks.append(redBrick)
 
-            pygame.draw.rect(screen, [178, 31, 0], redBrick) # rysowanie czerwonej cegly
+            pygame.draw.rect(screen, "white", redBrick) # rysowanie czerwonej cegly
     
     return redBricks
 
@@ -220,7 +222,7 @@ def generateOrangeBricks():
             orangeBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect pomaranczowsej cegly
             orangeBricks.append(orangeBrick)
 
-            pygame.draw.rect(screen, [214, 136, 0], orangeBrick) # rysowanie pomaranczowej cegly
+            pygame.draw.rect(screen, "white", orangeBrick) # rysowanie pomaranczowej cegly
     
     return orangeBricks
 
@@ -239,7 +241,7 @@ def generateGreenBricks():
             greenBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect zielonej cegly
             greenBricks.append(greenBrick)
 
-            pygame.draw.rect(screen, [0, 115, 42], greenBrick) # rysowanie zielonej cegly
+            pygame.draw.rect(screen, "white", greenBrick) # rysowanie zielonej cegly
     
     return greenBricks
 
@@ -258,7 +260,7 @@ def generateYellowBricks():
             yellowBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect zoltej cegly
             yellowBricks.append(yellowBrick)
 
-            pygame.draw.rect(screen, [207, 198, 23], yellowBrick) # rysowanie zoltej cegly
+            pygame.draw.rect(screen, "white", yellowBrick) # rysowanie zoltej cegly
 
     return yellowBricks
 
@@ -559,46 +561,16 @@ while running:
 
 
     # rysowanie startowej ball
-    if startBall.bottom >= 1005 and startBall.bottom < 1039: # startBall niebieska
-        pygame.draw.rect(screen, "white", startBall) 
-
-    elif startBall.top <= 319 and startBall.top > 281: # startBall zolta
-        pygame.draw.rect(screen, "white", startBall)
-    
-    elif startBall.top <= 281 and startBall.top > 243: # startBall zielona
-        pygame.draw.rect(screen, "white", startBall)
-
-    elif startBall.top <= 243 and startBall.top > 205: # startBall pomaranczowa
-        pygame.draw.rect(screen, "white", startBall)
-
-    elif startBall.top <= 205 and startBall.top > 167: # startBall czerwona
-        pygame.draw.rect(screen, "white", startBall)
-    
-    else: # startBall biala
-        pygame.draw.rect(screen, "white", startBall)
+    # startBall biala
+    pygame.draw.rect(screen, "white", startBall)
 
     
 
 
     # rysowanie ball
     if gameStarted == 1 and isBallOut == False:
-        if ball.bottom >= 1005 and ball.bottom < 1039: # ball niebieska
-            pygame.draw.rect(screen, "white", ball) 
-
-        elif ball.top <= 319 and ball.top > 281: # ball zolta
-            pygame.draw.rect(screen, "white", ball)
-        
-        elif ball.top <= 281 and ball.top > 243: # ball zielona
-            pygame.draw.rect(screen, "white", ball)
-
-        elif ball.top <= 243 and ball.top > 205: # ball pomaranczowa
-            pygame.draw.rect(screen, "white", ball)
-
-        elif ball.top <= 205 and ball.top > 167: # ball czerwona
-            pygame.draw.rect(screen, "white", ball)
-        
-        else: # ball biala
-            pygame.draw.rect(screen, "white", ball)
+        # ball biala
+        pygame.draw.rect(screen, "white", ball)
 
 
 
@@ -830,7 +802,10 @@ while running:
     
     # odbicie ball od endBar (ekran koncowy)
     if ball.colliderect(endBar) and gameEnded == 1:
-        ballVelX *= -1
+        totalBarHits += 1
+        if totalBarHits >= 4:
+            ballVelX *= -1
+            
         ballVelY *= -1
         
         canBreakBricks = True
@@ -845,7 +820,11 @@ while running:
     # odbicie startowej ball od bar
     if gameStarted == 0:
         if startBall.colliderect(bar):
-            startBallVelX *= -1
+            totalBarHits += 1
+
+            if totalBarHits >= 4:
+                startBallVelX *= -1
+
             startBallVelY *= -1
 
         # odbicie startowej ball od wallTop
