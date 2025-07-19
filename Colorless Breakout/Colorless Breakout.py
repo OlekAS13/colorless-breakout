@@ -25,16 +25,22 @@ debug = 0
 clickStartVisible = 1
 freePlayVisible = 0
 space = 0
-firstScreenCleared = False
+firstScreenClearedP1 = False
+firstScreenClearedP2 = False
 infiniteLives = False
 pointsVisible = 1
 settingsTextVisible = True
 totalBarHits = 0
 ballsAmount = 6
+playerMode = "One-player"
+flashPointsP1 = 0
+flashPointsP2 = 0
 
 # statystyki
-points = 0
-lostBalls = 1
+pointsP1 = 0
+pointsP2 = 0
+lostBallsP1 = 1
+lostBallsP2 = 1
 
 # ustawienia
 settingsOpen = False
@@ -191,10 +197,10 @@ def throwBall():
 
 
 # generacja czerwonych cegiel
-def generateRedBricks():
-    global redBricks, redBrick
+def generateRedBricksP1():
+    global redBricksP1, redBrick
 
-    redBricks = [] # czerwone cegly
+    redBricksP1 = [] # czerwone cegly
 
     for row in range(rows): # 2 rzedy wiec 2 iteracje
         for column in range(columns): # 15 kolumn wiec 15 iteracji
@@ -202,18 +208,18 @@ def generateRedBricks():
             y = redBrickPosY + row * (brickHeight + gapY) # jesli pierwszy rzad to y pozostaje bez zmian, jesli drugi rzad to y sie zwiekszy wysokosc cegly i odstep wiec bedzie w drugim rzedzie
 
             redBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect czerwonej cegly w oparciu o wyzej stworzone zmienne
-            redBricks.append(redBrick)
+            redBricksP1.append(redBrick)
 
             pygame.draw.rect(screen, "white", redBrick) # rysowanie czerwonej cegly
     
-    return redBricks
+    return redBricksP1
 
 
 # generacja pomaranczowych cegiel
-def generateOrangeBricks():
-    global orangeBricks, orangeBrick
+def generateOrangeBricksP1():
+    global orangeBricksP1, orangeBrick
 
-    orangeBricks = [] # pomaranczowe cegly
+    orangeBricksP1 = [] # pomaranczowe cegly
 
     for row in range(rows):
         for column in range(columns):
@@ -221,18 +227,18 @@ def generateOrangeBricks():
             y = orangeBrickPosY + row * (brickHeight + gapY)
 
             orangeBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect pomaranczowsej cegly
-            orangeBricks.append(orangeBrick)
+            orangeBricksP1.append(orangeBrick)
 
             pygame.draw.rect(screen, "white", orangeBrick) # rysowanie pomaranczowej cegly
     
-    return orangeBricks
+    return orangeBricksP1
 
 
 # generacja zielonych cegiel
-def generateGreenBricks():
-    global greenBricks, greenBrick
+def generateGreenBricksP1():
+    global greenBricksP1, greenBrick
 
-    greenBricks = [] # zielone cegly
+    greenBricksP1 = [] # zielone cegly
 
     for row in range(rows):
         for column in range(columns):
@@ -240,18 +246,18 @@ def generateGreenBricks():
             y = greenBrickPosY + row * (brickHeight + gapY)
 
             greenBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect zielonej cegly
-            greenBricks.append(greenBrick)
+            greenBricksP1.append(greenBrick)
 
             pygame.draw.rect(screen, "white", greenBrick) # rysowanie zielonej cegly
     
-    return greenBricks
+    return greenBricksP1
 
 
 # generacja zoltych cegiel
-def generateYellowBricks():
-    global yellowBricks, yellowBrick
+def generateYellowBricksP1():
+    global yellowBricksP1, yellowBrick
 
-    yellowBricks = [] # zolte cegly
+    yellowBricksP1 = [] # zolte cegly
 
     for row in range(rows):
         for column in range(columns):
@@ -259,23 +265,110 @@ def generateYellowBricks():
             y = yellowBrickPosY + row * (brickHeight + gapY)
 
             yellowBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect zoltej cegly
-            yellowBricks.append(yellowBrick)
+            yellowBricksP1.append(yellowBrick)
 
             pygame.draw.rect(screen, "white", yellowBrick) # rysowanie zoltej cegly
 
-    return yellowBricks
+    return yellowBricksP1
+
+# ---GRACZ 2---
+# generacja czerwonych cegiel
+def generateRedBricksP2():
+    global redBricksP2, redBrick
+
+    redBricksP2 = [] # czerwone cegly
+
+    for row in range(rows): # 2 rzedy wiec 2 iteracje
+        for column in range(columns): # 15 kolumn wiec 15 iteracji
+            x = redBrickPosX + column * (brickWidth + gapX) # bazowa pozycja cegly i dodawanie do niej numeru kolumny razy dlugosc cegly i odstep awiec jak pierwsza kolumna to bedzie bazowa pozycja, jak druga kolumna to bazowa + 2 razy cegla + odstep wiec bedzie  w drugiej kolumnie i tak dalej.
+            y = redBrickPosY + row * (brickHeight + gapY) # jesli pierwszy rzad to y pozostaje bez zmian, jesli drugi rzad to y sie zwiekszy wysokosc cegly i odstep wiec bedzie w drugim rzedzie
+
+            redBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect czerwonej cegly w oparciu o wyzej stworzone zmienne
+            redBricksP2.append(redBrick)
+
+            pygame.draw.rect(screen, "white", redBrick) # rysowanie czerwonej cegly
+    
+    return redBricksP2
+
+
+# generacja pomaranczowych cegiel
+def generateOrangeBricksP2():
+    global orangeBricksP2, orangeBrick
+
+    orangeBricksP2 = [] # pomaranczowe cegly
+
+    for row in range(rows):
+        for column in range(columns):
+            x = orangeBrickPosX + column * (brickWidth + gapX)
+            y = orangeBrickPosY + row * (brickHeight + gapY)
+
+            orangeBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect pomaranczowsej cegly
+            orangeBricksP2.append(orangeBrick)
+
+            pygame.draw.rect(screen, "white", orangeBrick) # rysowanie pomaranczowej cegly
+    
+    return orangeBricksP2
+
+
+# generacja zielonych cegiel
+def generateGreenBricksP2():
+    global greenBricksP2, greenBrick
+
+    greenBricksP2 = [] # zielone cegly
+
+    for row in range(rows):
+        for column in range(columns):
+            x = greenBrickPosX + column * (brickWidth + gapX)
+            y = greenBrickPosY + row * (brickHeight + gapY)
+
+            greenBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect zielonej cegly
+            greenBricksP2.append(greenBrick)
+
+            pygame.draw.rect(screen, "white", greenBrick) # rysowanie zielonej cegly
+    
+    return greenBricksP2
+
+
+# generacja zoltych cegiel
+def generateYellowBricksP2():
+    global yellowBricksP2, yellowBrick
+
+    yellowBricksP2 = [] # zolte cegly
+
+    for row in range(rows):
+        for column in range(columns):
+            x = yellowBrickPosX + column * (brickWidth + gapX)
+            y = yellowBrickPosY + row * (brickHeight + gapY)
+
+            yellowBrick = pygame.Rect(x, y, brickWidth, brickHeight) # rect zoltej cegly
+            yellowBricksP2.append(yellowBrick)
+
+            pygame.draw.rect(screen, "white", yellowBrick) # rysowanie zoltej cegly
+
+    return yellowBricksP2
 
 # piłka wyleciała
 def ballOut():
-    global isBallOut, isPaddleShort, lostBalls
+    global isBallOut, isPaddleShort, lostBallsP1, whichPlayer, lostBallsP2
     
     isBallOut = True
     isPaddleShort = False
     
     if infiniteLives == False:
-        lostBalls +=1
+        if whichPlayer == 1:
+            lostBallsP1 += 1
         
-        ball.update(960, 540, 13, 10)
+        elif whichPlayer == 2:
+            lostBallsP2 += 1
+    
+    if playerMode == "Two-player":
+        if whichPlayer == 1 and firstScreenClearedP2 == False:
+            whichPlayer = 2
+        
+        elif whichPlayer == 2 and firstScreenClearedP1 == False:
+            whichPlayer = 1
+        
+    ball.update(960, 540, 13, 10)
     
 
     
@@ -291,25 +384,31 @@ def sign(x):
     return (x > 0) - (x < 0)
 
 def resetGame():
-    global gameStarted, gameEnded, drawPaddle, clickStartVisible, freePlayVisible
-    global points, lostBalls, isBallOut, paddle, shortPaddle, totalBallHits, speedMode
+    global gameStarted, gameEnded, drawPaddle, clickStartVisible, freePlayVisible, flashPointsP1, flashPointsP2
+    global pointsP1, pointsP2, lostBallsP1, lostBallsP2, isBallOut, paddle, shortPaddle, totalBallHits, speedMode
     global ballSpeed, ballVelX, ballVelY, ballAngle, ballAngleRad
-    global firstScreenCleared, isPaddleShort, canBreakBricks
+    global firstScreenClearedP1, firstScreenClearedP2, isPaddleShort, canBreakBricks, whichPlayer
 
     gameStarted = 0
     gameEnded = 0
     drawPaddle = 0
     clickStartVisible = 1
     freePlayVisible = 0
-    points = 0
-    lostBalls = 1
+    pointsP1 = 0
+    pointsP2 = 0
+    lostBallsP1 = 1
+    lostBallsP2 = 1
     isBallOut = True
-    firstScreenCleared = False
+    firstScreenClearedP1 = False
+    firstScreenClearedP2 = False
     isPaddleShort = False
     totalBallHits = 0
     canBreakBricks = False
     speedMode = "paddle"
     ballSpeed = 4
+    flashPointsP1 = 0
+    flashPointsP2 = 0
+    whichPlayer = 1
 
     # reset ball angle i prędkość
     whichAngle = random.randint(0, 1)
@@ -329,7 +428,8 @@ def resetGame():
     # reset startBall
     startBall.update(960, 540, 13, 10)
 
-    newListsOfBricks()
+    newListsOfBricksP1()
+    newListsOfBricksP2()
 
 
 
@@ -337,19 +437,31 @@ def resetGame():
 pygame.time.set_timer(TOGGLE_CLICKSTART, 2000) # 1 sekundowy timer dla "CLICK START"
 
 # tworzenie cegiel i zalaczanie kazdej do listy
-def newListsOfBricks():
-    global redBricks, orangeBricks, greenBricks, yellowBricks
+def newListsOfBricksP1():
+    global redBricksP1, orangeBricksP1, greenBricksP1, yellowBricksP1
     
-    redBricks = generateRedBricks()
-    orangeBricks = generateOrangeBricks()
-    greenBricks = generateGreenBricks()
-    yellowBricks = generateYellowBricks()
+    redBricksP1 = generateRedBricksP1()
+    orangeBricksP1 = generateOrangeBricksP1()
+    greenBricksP1 = generateGreenBricksP1()
+    yellowBricksP1 = generateYellowBricksP1()
 
-newListsOfBricks()
+def newListsOfBricksP2():
+    global redBricksP2, orangeBricksP2, greenBricksP2, yellowBricksP2
+    
+    redBricksP2 = generateRedBricksP2()
+    orangeBricksP2 = generateOrangeBricksP2()
+    greenBricksP2 = generateGreenBricksP2()
+    yellowBricksP2 = generateYellowBricksP2()
+
+newListsOfBricksP1()
+newListsOfBricksP2()
 
 
 while running:
     pressedKeys = pygame.key.get_pressed()
+
+    if playerMode == "One-player":
+        whichPlayer = 1
 
     # obsluga eventow
     for event in pygame.event.get():
@@ -393,6 +505,12 @@ while running:
             
             elif pressedKeys[pygame.K_a] and ballsAmount == 4:
                 ballsAmount = 6
+
+            elif pressedKeys[pygame.K_p] and playerMode == "One-player":
+                playerMode = "Two-player"
+            
+            elif pressedKeys[pygame.K_p] and playerMode == "Two-player":
+                playerMode = "One-player"
         
         if pressedKeys[pygame.K_g] or event.type == pygame.MOUSEBUTTONDOWN and isBallOut == True and gameStarted == 1: # serwowanie ball
             pygame.time.set_timer(THROW_BALL_EVENT, random.randint(1000, 3000), loops = 1)
@@ -434,17 +552,31 @@ while running:
 
 
     # rysowanie cegiel
-    for redBrick in redBricks:    
-        pygame.draw.rect(screen, "white", redBrick) # rysowanie czerwonej cegly
+    if whichPlayer == 1:
+        for redBrick in redBricksP1:    
+            pygame.draw.rect(screen, "white", redBrick) # rysowanie czerwonej cegly
 
-    for orangeBrick in orangeBricks:
-        pygame.draw.rect(screen, "white", orangeBrick) # rysowanie pomaranczowej cegly
+        for orangeBrick in orangeBricksP1:
+            pygame.draw.rect(screen, "white", orangeBrick) # rysowanie pomaranczowej cegly
 
-    for greenBrick in greenBricks:
-        pygame.draw.rect(screen, "white", greenBrick) # rysowanie zielonej cegly
+        for greenBrick in greenBricksP1:
+            pygame.draw.rect(screen, "white", greenBrick) # rysowanie zielonej cegly
 
-    for yellowBrick in yellowBricks:
-        pygame.draw.rect(screen, "white", yellowBrick) # rysowanie zoltej cegly
+        for yellowBrick in yellowBricksP1:
+            pygame.draw.rect(screen, "white", yellowBrick) # rysowanie zoltej cegly
+    
+    elif whichPlayer == 2:
+        for redBrick in redBricksP2:    
+            pygame.draw.rect(screen, "white", redBrick) # rysowanie czerwonej cegly
+
+        for orangeBrick in orangeBricksP2:
+            pygame.draw.rect(screen, "white", orangeBrick) # rysowanie pomaranczowej cegly
+
+        for greenBrick in greenBricksP2:
+            pygame.draw.rect(screen, "white", greenBrick) # rysowanie zielonej cegly
+
+        for yellowBrick in yellowBricksP2:
+            pygame.draw.rect(screen, "white", yellowBrick) # rysowanie zoltej cegly
 
     
 
@@ -471,105 +603,88 @@ while running:
     if settingsTextVisible == True and settingsOpen == True:
         openSettingsText1 = freesansbold.render("Balls amount: {}".format(ballsAmount - 1), True, "white")
         openSettingsText2 = freesansbold.render("A to toggle", True, "white")
-        openSettingsText3 = freesansbold.render("Ball rotation: {}".format(ballRotationMode), True, "white")
-        openSettignsText4 = freesansbold.render("B to toggle", True, "white")
-        openSettingsText5 = freesansbold.render("Left wall glitch: {}".format(leftWallGlitch), True, "white")
-        openSettingsText6 = freesansbold.render("L to toggle", True, "white")
-        openSettingsText7 = freesansbold.render("I for infinite lives", True, "white")
+        openSettingsText3 = freesansbold.render("Mode: {}".format(playerMode), True, "white")
+        openSettingsText4 = freesansbold.render("P to toggle", True, "white")
+        openSettingsText5 = freesansbold.render("Ball rotation: {}".format(ballRotationMode), True, "white")
+        openSettignsText6 = freesansbold.render("B to toggle", True, "white")
+        openSettingsText7 = freesansbold.render("Left wall glitch: {}".format(leftWallGlitch), True, "white")
+        openSettingsText8 = freesansbold.render("L to toggle", True, "white")
+        openSettingsText9 = freesansbold.render("I for infinite lives", True, "white")
         
         screen.blit(openSettingsText1, [100, 850])
         screen.blit(openSettingsText2, [100, 880])
-        screen.blit(openSettingsText3, [100, 910])
-        screen.blit(openSettignsText4, [100, 940])
-        screen.blit(openSettingsText5, [100, 970])
-        screen.blit(openSettingsText6, [100, 1000])
-        screen.blit(openSettingsText7, [100, 1030])
+        screen.blit(openSettingsText3, [100, 790])
+        screen.blit(openSettingsText4, [100, 820])
+        screen.blit(openSettingsText5, [100, 910])
+        screen.blit(openSettignsText6, [100, 940])
+        screen.blit(openSettingsText7, [100, 970])
+        screen.blit(openSettingsText8, [100, 1000])
+        screen.blit(openSettingsText9, [100, 1030])
         
         
     # ---WYSWIETLANIE STATYSTYK---
 
     
-    # tekst gracza staky
-    playerText = atari.render("I", True, "white")
-    
+    # tekst gracza
+    playerText = atari.render("{}".format(whichPlayer), True, "white")
+
     
     # miejsce setne punktow
-    pointsHundered = atari.render("{}".format(points // 100), True, "white")
-
-    """if points // 100 == 0:
-        pointsHundered = atari.render("O", True, [204, 204, 204])
-    
-    elif points // 100 == 1:
-        pointsHundered = atari.render("I", True, [204, 204, 204])
-    
-    elif points // 100 >= 2:
-        pointsHundered = atari.render("{}".format(points // 100), True, [204, 204, 204])"""
-
+    pointsHundered = atari.render("{}".format(pointsP1 // 100), True, "white")
     
     # miejsce dziesiate punktow
-    pointsTen = atari.render("{}".format((points // 10) % 10), True, "white")
-
-    """if (points // 10) % 10 == 0:
-        pointsTen = atari.render("O", True, [204, 204, 204])
-        
-    elif (points // 10) % 10 == 1:
-        pointsTen = atari.render("I", True, [204, 204, 204])
-    
-    elif (points // 10) % 10 >= 2:
-        pointsTen = atari.render("{}".format((points // 10) % 10), True, [204, 204, 204])"""
+    pointsTen = atari.render("{}".format((pointsP1 // 10) % 10), True, "white")
     
     # miejsce jednosci punktow
-    pointsOne = atari.render("{}".format(points % 10), True, "white")
-
-    """if points % 10 == 0:
-        pointsOne = atari.render("O", True, [204, 204, 204])
-    
-    elif points % 10 == 1:
-        pointsOne = atari.render("I", True, [204, 204, 204])
+    pointsOne = atari.render("{}".format(pointsP1 % 10), True, "white")
         
-    elif points % 10 >= 2:
-        pointsOne = atari.render("{}".format(points % 10), True, [204, 204, 204])"""
-        
-    
     # tekst ilosci straconych pilek
-    lostBallsText = atari.render("{}".format(lostBalls), True, "white")
-
-    """if lostBalls == 0:
-        lostBallsText = atari.render("O", True, [204, 204, 204])
-        
-    elif lostBalls == 1:
-        lostBallsText = atari.render("I", True, [204, 204, 204])
-        
-    elif lostBalls >= 2:
-        lostBallsText = atari.render("{}".format(lostBalls), True, [204, 204, 204])"""
+    if whichPlayer == 1:
+        lostBallsText = atari.render("{}".format(lostBallsP1), True, "white")
     
-    # punkty drugiego gracza stale
-    secPointsHundered = atari.render("0", True, "white")
-    secPointsTen = atari.render("0", True, "white")
-    secPointsOne = atari.render("0", True, "white")
+    elif whichPlayer == 2:
+        lostBallsText = atari.render("{}".format(lostBallsP2), True, "white")
+    
+    # punkty drugiego gracza
+    secPointsHundered = atari.render("{}".format(pointsP2 // 100), True, "white")
+    secPointsTen = atari.render("{}".format((pointsP2 // 10) % 10), True, "white")
+    secPointsOne = atari.render("{}".format(pointsP2 % 10), True, "white")
     
     
     screen.blit(playerText, [590, 24])
+
+    if gameStarted == 1:
+        if flashPointsP1 == 1:
+            if pointsVisible == 1:
+                screen.blit(pointsHundered, [650, 85])
+                screen.blit(pointsTen, [710, 85])
+                screen.blit(pointsOne, [770, 85])
+        
+        elif flashPointsP1 == 0:
+            screen.blit(pointsHundered, [650, 85])
+            screen.blit(pointsTen, [710, 85])
+            screen.blit(pointsOne, [770, 85])
+        
+        if flashPointsP2 == 1:
+            if pointsVisible == 1:
+                screen.blit(secPointsHundered, [1045, 85])
+                screen.blit(secPointsTen, [1105, 85])
+                screen.blit(secPointsOne, [1165, 85])
+        
+        elif flashPointsP2 == 0:
+            screen.blit(secPointsHundered, [1045, 85])
+            screen.blit(secPointsTen, [1105, 85])
+            screen.blit(secPointsOne, [1165, 85])
     
-    if pointsVisible == 1 and gameEnded == 0:
+    if gameEnded == 1 or gameStarted == 0:
         screen.blit(pointsHundered, [650, 85])
         screen.blit(pointsTen, [710, 85])
         screen.blit(pointsOne, [770, 85])
+        screen.blit(secPointsHundered, [1045, 85])
+        screen.blit(secPointsTen, [1105, 85])
+        screen.blit(secPointsOne, [1165, 85])
+
     screen.blit(lostBallsText, [985, 24])
-    screen.blit(secPointsHundered, [1045, 85])
-    screen.blit(secPointsTen, [1105, 85])
-    screen.blit(secPointsOne, [1165, 85])
-
-    if gameStarted == 0:
-        screen.blit(pointsHundered, [650, 85])
-        screen.blit(pointsTen, [710, 85])
-        screen.blit(pointsOne, [770, 85])
-    
-    if gameEnded == 1:
-        screen.blit(pointsHundered, [650, 85])
-        screen.blit(pointsTen, [710, 85])
-        screen.blit(pointsOne, [770, 85])
-
 
     # rysowanie startowej ball
     # startBall biala
@@ -646,170 +761,94 @@ while running:
     
     # odbijanie ball od cegiel
     if canBreakBricks == True:
-        allBrickRows = [
-            (redBricks, 7, redBrickSound),
-            (orangeBricks, 5, orangeBrickSound),
-            (greenBricks, 3, greenBrickSound),
-            (yellowBricks, 1, yellowBrickSound)
-        ]
+        if whichPlayer == 1:
+            allBrickRowsP1 = [
+                (redBricksP1, 7, redBrickSound),
+                (orangeBricksP1, 5, orangeBrickSound),
+                (greenBricksP1, 3, greenBrickSound),
+                (yellowBricksP1, 1, yellowBrickSound)
+            ]
 
-        for brickList, pointValue, sound in allBrickRows:
-            for idx, brick in enumerate(brickList):
-                prevBallVelX = ballVelX
-                prevBallVelY = ballVelY
+            for brickList, pointValue, sound in allBrickRowsP1:
+                for idx, brick in enumerate(brickList):
+                    prevBallVelX = ballVelX
+                    prevBallVelY = ballVelY
 
-                if ball.colliderect(brick):
-                    if pointValue >= 5 and speedMode == "paddle":
-                        changeSpeed(8)
+                    if ball.colliderect(brick):
+                        if pointValue >= 5 and speedMode == "paddle":
+                            changeSpeed(8)
 
-                    if sign(ballVelX) != sign(prevBallVelX):
-                        ballVelX *= -1
+                        if sign(ballVelX) != sign(prevBallVelX):
+                            ballVelX *= -1
 
-                    if sign(ballVelY) == sign(prevBallVelY):
-                        ballVelY *= -1
+                        if sign(ballVelY) == sign(prevBallVelY):
+                            ballVelY *= -1
 
-                    if gameEnded == 0:
-                        del brickList[idx]
-                        points += pointValue
+                        if gameEnded == 0:
+                            del brickList[idx]
+                            pointsP1 += pointValue
 
-                    canBreakBricks = False
-                    if pointValue >= 5:
-                        speedMode = "brick"
+                        canBreakBricks = False
+                        if pointValue >= 5:
+                            speedMode = "brick"
 
-                    if gameStarted == 1 and gameEnded == 0:
-                        sound.stop()
+                        if gameStarted == 1 and gameEnded == 0:
+                            sound.stop()
 
-                        redBrickSound.stop()
-                        orangeBrickSound.stop()
-                        greenBrickSound.stop()
-                        yellowBrickSound.stop()
+                            redBrickSound.stop()
+                            orangeBrickSound.stop()
+                            greenBrickSound.stop()
+                            yellowBrickSound.stop()
 
-                        sound.play()
-                    break
-            if not canBreakBricks:
-                break
-    
-    """# odpalanie dzwieku przy kolizji z wallLeft
-    if ball.colliderect(wallLeft) and gameEnded == 0:
-        wallSound.stop()
-        wallSound.play()
-        
-        
-        #pygame.time.set_timer(SOUND_DELAY_WALL, 5, loops = 1)"""
-        
-    
-    
-    """if canBreakBricks == True:
-        # odbicie ball od czerwonej cegly
-        for idx, redBrick in enumerate(redBricks):
-                prevBallVelX = ballVelX
-                prevBallVelY = ballVelY
-                
-                if ball.colliderect(redBrick):
-                    if speedMode == "bat": # zmiana predkosci tylko w wypadku gdy ta jeszcze nie zostala zmieniona
-                        changeSpeed(8)
-                    
-                    if sign(ballVelX) != sign(prevBallVelX): # ewentualne zamienienie znaku gdy cos niepoprawnie sie odbije (to jest bug i tylko tak udalo mi sie go wyeliminowac)
-                        ballVelX *= -1
-                    
-                    if sign(ballVelY) == sign(prevBallVelY): # taka sama zamiana z ballVelY (trzeba to robic poniewaz ballSpeed sie zmienia, to oznacza ze obliczane sa nove ballVel wiec trzeba je tak zamieniac
-                        ballVelY *= -1
-                    
-                    if gameEnded == 0:
-                        del redBricks[idx]
-                        
-                        points += 7
-
-                    canBreakBricks = False
-                    speedMode = "brick"
-
-                    if gameEnded == 0:
-                        redBrickSound.stop()
-                        redBrickSound.play()
-
-                        orangeBrickSound.stop()
-                        greenBrickSound.stop()
-                        yellowBrickSound.stop()
-                    
+                            sound.play()
+                        break
+                if not canBreakBricks:
                     break
         
-        # odbicie ball od pomaranczowej cegly
-        for idx, orangeBrick in enumerate(orangeBricks):
-                prevBallVelX = ballVelX
-                prevBallVelY = ballVelY
-                
-                
-                if ball.colliderect(orangeBrick):
-                    if speedMode == "bat": # zmiana predkosci tylko w wypadku gdy ta jeszcze nie zostala zmieniona
-                        changeSpeed(8)
-                        
-                    if sign(ballVelX) != sign(prevBallVelX): # ewentualne zamienienie znaku gdy cos niepoprawnie sie odbije (to jest bug i tylko tak udalo mi sie go wyeliminowac)
-                        ballVelX *= -1
-                        
-                    if sign(ballVelY) == sign(prevBallVelY): # taka sama zamiana z ballVelY (trzeba to robic poniewaz ballSpeed sie zmienia, to oznacza ze obliczane sa nove ballVel wiec trzeba je tak zamieniac
-                        ballVelY *= -1
+        # ---GRACZ 2---
+        if whichPlayer == 2:
+            allBrickRowsP2 = [
+                (redBricksP2, 7, redBrickSound),
+                (orangeBricksP2, 5, orangeBrickSound),
+                (greenBricksP2, 3, greenBrickSound),
+                (yellowBricksP2, 1, yellowBrickSound)
+            ]
 
-                    if gameEnded == 0:
-                        del orangeBricks[idx]
-                        
-                        points += 5
-                        
-                    canBreakBricks = False
-                    speedMode = "brick"
+            for brickList, pointValue, sound in allBrickRowsP2:
+                for idx, brick in enumerate(brickList):
+                    prevBallVelX = ballVelX
+                    prevBallVelY = ballVelY
 
-                    if gameEnded == 0:
-                        orangeBrickSound.stop()
-                        orangeBrickSound.play()
+                    if ball.colliderect(brick):
+                        if pointValue >= 5 and speedMode == "paddle":
+                            changeSpeed(8)
 
-                        redBrickSound.stop()
-                        greenBrickSound.stop()
-                        yellowBrickSound.stop()
+                        if sign(ballVelX) != sign(prevBallVelX):
+                            ballVelX *= -1
 
+                        if sign(ballVelY) == sign(prevBallVelY):
+                            ballVelY *= -1
+
+                        if gameEnded == 0:
+                            del brickList[idx]
+                            pointsP2 += pointValue
+
+                        canBreakBricks = False
+                        if pointValue >= 5:
+                            speedMode = "brick"
+
+                        if gameStarted == 1 and gameEnded == 0:
+                            sound.stop()
+
+                            redBrickSound.stop()
+                            orangeBrickSound.stop()
+                            greenBrickSound.stop()
+                            yellowBrickSound.stop()
+
+                            sound.play()
+                        break
+                if not canBreakBricks:
                     break
-
-        # odbicie ball od zielonej cegly
-        for idx, greenBrick in enumerate(greenBricks):
-                if ball.colliderect(greenBrick):
-                    ballVelY *= -1
-                    
-                    if gameEnded == 0:
-                        del greenBricks[idx]
-
-                        points += 3
-                        
-                    canBreakBricks = False
-
-                    if gameEnded == 0:
-                        greenBrickSound.stop()
-                        greenBrickSound.play()
-
-                        redBrickSound.stop()
-                        orangeBrickSound.stop()
-                        yellowBrickSound.stop()
-
-                    break
-        
-        # odbicie ball od zoltej cegly
-        for idx, yellowBrick in enumerate(yellowBricks):
-                if ball.colliderect(yellowBrick):
-                    ballVelY *= -1
-                    
-                    if gameEnded == 0:
-                        del yellowBricks[idx]
-                    
-                        points += 1
-                        
-                    canBreakBricks = False
-
-                    if gameEnded == 0:
-                        yellowBrickSound.stop()
-                        yellowBrickSound.play()
-
-                        redBrickSound.stop()
-                        orangeBrickSound.stop()
-                        greenBrickSound.stop()
-
-                    break"""
     
     # odbicie ball od endBar (ekran koncowy)
     if ball.colliderect(endBar) and gameEnded == 1:
@@ -859,7 +898,7 @@ while running:
         startBall = startBall.move(startBallVelX, startBallVelY)
 
         # odbicie startowej ball od yellow bricks (reszty nie trzeba bo nigdy ich nie zbije)
-        for idx, yellowBrick in enumerate(yellowBricks):
+        for idx, yellowBrick in enumerate(yellowBricksP1):
             if startBall.colliderect(yellowBrick):
                 startBallVelY *= -1
                 
@@ -889,9 +928,17 @@ while running:
         
         canBreakBricks = True
         
-        if not redBricks and not orangeBricks and not greenBricks and not yellowBricks and firstScreenCleared == False:
-            newListsOfBricks()
-            firstScreenCleared = True
+        # generacja drugiego ekranu cegiel
+        if whichPlayer == 1:
+            if not redBricksP1 and not orangeBricksP1 and not greenBricksP1 and not yellowBricksP1 and firstScreenClearedP1 == False:
+                newListsOfBricksP1()
+                firstScreenClearedP1 = True
+        
+        # ---GRACZ 2---
+        if whichPlayer == 2:
+            if not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2 and firstScreenClearedP2 == False:
+                newListsOfBricksP2()
+                firstScreenClearedP2 = True
 
         totalBallHits += 1
 
@@ -929,32 +976,96 @@ while running:
 
         
         # generacja drugiego ekranu cegiel
-        if not redBricks and not orangeBricks and not greenBricks and not yellowBricks and firstScreenCleared == False:
-            newListsOfBricks()
-            firstScreenCleared = True
+        if whichPlayer == 1:
+            if not redBricksP1 and not orangeBricksP1 and not greenBricksP1 and not yellowBricksP1 and firstScreenClearedP1 == False:
+                newListsOfBricksP1()
+                firstScreenClearedP1 = True
+        
+        # ---GRACZ 2---
+        if whichPlayer == 2:
+            if not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2 and firstScreenClearedP2 == False:
+                newListsOfBricksP2()
+                firstScreenClearedP2 = True
             
     
     # przegrana
-    if lostBalls == ballsAmount and gameEnded == 0:
-        gameEnded = 1
-        clickStartVisible = 1
-        freePlayVisible = 0
-        settingsTextVisible = True
-        
-        pygame.time.set_timer(THROW_BALL_EVENT, random.randint(1000, 3000), loops = 1)
-    
-            
-    # ekran koncowy
-    if ball.colliderect(yellowBrick) or ball.colliderect(greenBrick) or ball.colliderect(orangeBrick) or ball.colliderect(redBrick) and gameStarted == 1:
-        if not redBricks and not orangeBricks and not greenBricks and not yellowBricks and firstScreenCleared == True:
-            drawPaddle = 0
+    if playerMode == "One-player":
+        if lostBallsP1 == ballsAmount and gameEnded == 0:
             gameEnded = 1
             clickStartVisible = 1
             freePlayVisible = 0
             settingsTextVisible = True
+            
+            pygame.time.set_timer(THROW_BALL_EVENT, random.randint(1000, 3000), loops = 1)
     
-    if gameEnded == 1:
+    elif playerMode == "Two-player":
+        if lostBallsP1 == ballsAmount and lostBallsP2 == ballsAmount and gameEnded == 0:
+            gameEnded = 1
+            clickStartVisible = 1
+            freePlayVisible = 0
+            settingsTextVisible = True
+            
+            pygame.time.set_timer(THROW_BALL_EVENT, random.randint(1000, 3000), loops = 1)
+            
+    # ekran koncowy
+    if ball.colliderect(yellowBrick) or ball.colliderect(greenBrick) or ball.colliderect(orangeBrick) or ball.colliderect(redBrick) and gameStarted == 1:
+        if playerMode == "One-player":
+            if whichPlayer == 1:
+                if not redBricksP1 and not orangeBricksP1 and not greenBricksP1 and not yellowBricksP1 and firstScreenClearedP1 == True:
+                    drawPaddle = 0
+                    gameEnded = 1
+                    clickStartVisible = 1
+                    freePlayVisible = 0
+                    settingsTextVisible = True
+                
+        elif playerMode == "Two-player":
+            if whichPlayer == 1:
+                if not redBricksP1 and not orangeBricksP1 and not greenBricksP1 and not yellowBricksP1 and firstScreenClearedP1 == True: # koniec gry
+                    if not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2 and firstScreenClearedP2 == True:
+                        drawPaddle = 0
+                        gameEnded = 1
+                        clickStartVisible = 1
+                        freePlayVisible = 0
+                        settingsTextVisible = True
+                    
+                    else: # zamiana gracza
+                        whichPlayer = 2
+                        isBallOut = True
+                        isPaddleShort = False
+                        
+                        ball.update(960, 540, 13, 10)
+            
+            if whichPlayer == 2:
+                if not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2 and firstScreenClearedP2 == True: # koniec gry
+                    if not redBricksP1 and not orangeBricksP1 and not greenBricksP1 and not yellowBricksP1 and firstScreenClearedP1 == True:
+                        drawPaddle = 0
+                        gameEnded = 1
+                        clickStartVisible = 1
+                        freePlayVisible = 0
+                        settingsTextVisible = True
+                    
+                    else: # zamiana gracza
+                        whichPlayer = 1
+                        isBallOut = True
+                        isPaddleShort = False
+
+                        ball.update(960, 540, 13, 10)
+    
+    if gameEnded == 1 or gameStarted == 0:
         pointsVisible = 1
+    
+    if gameStarted == 1:
+        if whichPlayer == 1:
+            flashPointsP1 = 1
+            flashPointsP2 = 0
+
+        elif whichPlayer == 2:
+            flashPointsP2 = 1
+            flashPointsP1 = 0
+    
+    else:
+        flashPointsP1 = 0
+        flashPointsP2 = 0
         
     
     
@@ -966,7 +1077,7 @@ while running:
         text2 = freesansbold.render("O: {}; X: {}; Y: {}".format(checkOffset(), round(ballVelX, 2), round(ballVelY, 2)), True, "white")
         text3 = freesansbold.render("BALL OUT: {}".format(isBallOut), True, "white")
         text4 = freesansbold.render("SPEED MODE: {}".format(speedMode), True, "white")
-        text5 = freesansbold.render("LOST BALLS: {}".format(lostBalls), True, "white")
+        text5 = freesansbold.render("LOST BALLS 1, 2: {}, {}".format(lostBallsP1, lostBallsP2), True, "white")
         text6 = freesansbold.render("FPS: {}".format(round(pygame.time.Clock.get_fps(clock), 2)), True, "white")
 
         screen.blit(text, [0, 0])
@@ -981,7 +1092,7 @@ while running:
         text2 = freesansbold.render("O: {}; X: {}; Y: {}".format(checkOffset(), round(ballVelX, 2), round(ballVelY, 2)), True, "black")
         text3 = freesansbold.render("BALL OUT: {}".format(isBallOut), True, "black")
         text4 = freesansbold.render("SPEED MODE: {}".format(speedMode), True, "black")
-        text5 = freesansbold.render("LOST BALLS: {}".format(lostBalls), True, "black")
+        text5 = freesansbold.render("LOST BALLS 1, 2: {}, {}".format(lostBallsP1, lostBallsP2), True, "black")
         text6 = freesansbold.render("FPS: {}".format(round(pygame.time.Clock.get_fps(clock), 2)), True, "black")
 
         screen.blit(text, [0, 0])
