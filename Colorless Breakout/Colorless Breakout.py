@@ -30,6 +30,7 @@ infiniteLives = False
 pointsVisible = 1
 settingsTextVisible = True
 totalBarHits = 0
+ballsAmount = 6
 
 # statystyki
 points = 0
@@ -386,6 +387,12 @@ while running:
             
             elif pressedKeys[pygame.K_i]:
                 infiniteLives = True
+
+            elif pressedKeys[pygame.K_a] and ballsAmount == 6:
+                ballsAmount = 4
+            
+            elif pressedKeys[pygame.K_a] and ballsAmount == 4:
+                ballsAmount = 6
         
         if pressedKeys[pygame.K_g] or event.type == pygame.MOUSEBUTTONDOWN and isBallOut == True and gameStarted == 1: # serwowanie ball
             pygame.time.set_timer(THROW_BALL_EVENT, random.randint(1000, 3000), loops = 1)
@@ -462,17 +469,21 @@ while running:
     
     # tekst otwartych ustawien
     if settingsTextVisible == True and settingsOpen == True:
-        openSettingsText1 = freesansbold.render("Ball rotation: {}".format(ballRotationMode), True, "white")
-        openSettignsText2 = freesansbold.render("B to toggle", True, "white")
-        openSettingsText3 = freesansbold.render("Left wall glitch: {}".format(leftWallGlitch), True, "white")
-        openSettingsText4 = freesansbold.render("L to toggle", True, "white")
-        openSettingsText5 = freesansbold.render("I for infinite lives", True, "white")
+        openSettingsText1 = freesansbold.render("Balls amount: {}".format(ballsAmount - 1), True, "white")
+        openSettingsText2 = freesansbold.render("A to toggle", True, "white")
+        openSettingsText3 = freesansbold.render("Ball rotation: {}".format(ballRotationMode), True, "white")
+        openSettignsText4 = freesansbold.render("B to toggle", True, "white")
+        openSettingsText5 = freesansbold.render("Left wall glitch: {}".format(leftWallGlitch), True, "white")
+        openSettingsText6 = freesansbold.render("L to toggle", True, "white")
+        openSettingsText7 = freesansbold.render("I for infinite lives", True, "white")
         
-        screen.blit(openSettingsText1, [100, 910])
-        screen.blit(openSettignsText2, [100, 940])
-        screen.blit(openSettingsText3, [100, 970])
-        screen.blit(openSettingsText4, [100, 1000])
-        screen.blit(openSettingsText5, [100, 1030])
+        screen.blit(openSettingsText1, [100, 850])
+        screen.blit(openSettingsText2, [100, 880])
+        screen.blit(openSettingsText3, [100, 910])
+        screen.blit(openSettignsText4, [100, 940])
+        screen.blit(openSettingsText5, [100, 970])
+        screen.blit(openSettingsText6, [100, 1000])
+        screen.blit(openSettingsText7, [100, 1030])
         
         
     # ---WYSWIETLANIE STATYSTYK---
@@ -924,7 +935,7 @@ while running:
             
     
     # przegrana
-    if lostBalls == 6 and gameEnded == 0:
+    if lostBalls == ballsAmount and gameEnded == 0:
         gameEnded = 1
         clickStartVisible = 1
         freePlayVisible = 0
