@@ -49,7 +49,7 @@ leftWallGlitch = "On"
 
 # elementy gry
 paddle = pygame.Rect(960, 1014, 45, 17) # rect paddle
-ball = pygame.Rect(960, 540, 13, 10) # rect ball
+ball = pygame.Rect(960, 540, 12, 9) # rect ball
 wallTop = pygame.Rect(573, 0, 775, 35) # rect wallTop
 wall = pygame.image.load("wall.png").convert_alpha() # image wallLeft i wallRight
 bar = pygame.Rect(585, 1014, 750, 17) # rect bar
@@ -61,9 +61,9 @@ endBar = pygame.Rect(585, 1014, 750, 17) # rect endBar (bar na ekran koncowy)
 
 # ogolne info do cegiel
 brickWidth = 45
-brickHeight = 15
+brickHeight = 13
 gapX = 5
-gapY = 4
+gapY = 6
 rows = 2
 columns = 15
 
@@ -117,7 +117,7 @@ freesansbold = pygame.font.Font("freesansbold.ttf", 30) # czcionka freesansbold
 
 # ---STARTOWE---
 # startowa ball
-startBall = pygame.Rect(960, 540, 13, 10)
+startBall = pygame.Rect(960, 540, 12, 9)
 startBallSpeed = 7
 
 startBallVelX = math.cos(ballAngleRad) * startBallSpeed
@@ -172,7 +172,7 @@ def throwBall():
 
     isBallOut = False
     
-    ball = pygame.Rect(random.randint(621, 1300), 540, 13, 10) # rect ball
+    ball = pygame.Rect(random.randint(621, 1300), 540, 12, 9) # rect ball
     
     speedMode = "paddle"
     ballSpeed = 4
