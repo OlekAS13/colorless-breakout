@@ -362,10 +362,10 @@ def ballOut():
             lostBallsP2 += 1
     
     if playerMode == "Two-player":
-        if whichPlayer == 1 and firstScreenClearedP2 == False:
+        if whichPlayer == 1 and not(firstScreenClearedP1 == True and not redBricksP1 and not orangeBricksP1 and not greenBricksP1 and not yellowBricksP1):
             whichPlayer = 2
         
-        elif whichPlayer == 2 and firstScreenClearedP1 == False:
+        elif whichPlayer == 2 and not(firstScreenClearedP2 == True and not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2):
             whichPlayer = 1
         
     ball.update(960, 540, 13, 10)
