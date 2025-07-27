@@ -111,7 +111,7 @@ ballVelX = math.cos(ballAngleRad) * ballSpeed
 ballVelY = -math.sin(ballAngleRad) * ballSpeed
 
 # ---CZCIONKI---
-atari = pygame.font.Font("atari.otf", 60) # czcionka atari
+atari = pygame.font.Font("atari.ttf", 60) # czcionka atari
 freesansbold = pygame.font.Font("freesansbold.ttf", 30) # czcionka freesansbold
 
 
