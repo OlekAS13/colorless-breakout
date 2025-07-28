@@ -111,7 +111,7 @@ ballVelX = math.cos(ballAngleRad) * ballSpeed
 ballVelY = -math.sin(ballAngleRad) * ballSpeed
 
 # ---CZCIONKI---
-atari = pygame.font.Font("atari.ttf", 60) # czcionka atari
+atari = pygame.font.Font("atari.otf", 70) # czcionka atari
 freesansbold = pygame.font.Font("freesansbold.ttf", 30) # czcionka freesansbold
 
 
@@ -651,40 +651,40 @@ while running:
     secPointsOne = atari.render("{}".format(pointsP2 % 10), True, "white")
     
     
-    screen.blit(playerText, [590, 24])
+    screen.blit(playerText, [565, 20])
 
     if gameStarted == 1:
         if flashPointsP1 == 1:
             if pointsVisible == 1:
-                screen.blit(pointsHundered, [650, 85])
-                screen.blit(pointsTen, [710, 85])
-                screen.blit(pointsOne, [770, 85])
+                screen.blit(pointsHundered, [608, 85])
+                screen.blit(pointsTen, [651, 85])
+                screen.blit(pointsOne, [694, 85])
         
         elif flashPointsP1 == 0:
-            screen.blit(pointsHundered, [650, 85])
-            screen.blit(pointsTen, [710, 85])
-            screen.blit(pointsOne, [770, 85])
+            screen.blit(pointsHundered, [608, 85])
+            screen.blit(pointsTen, [651, 85])
+            screen.blit(pointsOne, [694, 85])
         
         if flashPointsP2 == 1:
             if pointsVisible == 1:
-                screen.blit(secPointsHundered, [1045, 85])
-                screen.blit(secPointsTen, [1105, 85])
-                screen.blit(secPointsOne, [1165, 85])
+                screen.blit(secPointsHundered, [1008, 85])
+                screen.blit(secPointsTen, [1051, 85])
+                screen.blit(secPointsOne, [1094, 85])
         
         elif flashPointsP2 == 0:
-            screen.blit(secPointsHundered, [1045, 85])
-            screen.blit(secPointsTen, [1105, 85])
-            screen.blit(secPointsOne, [1165, 85])
+            screen.blit(secPointsHundered, [1008, 85])
+            screen.blit(secPointsTen, [1051, 85])
+            screen.blit(secPointsOne, [1094, 85])
     
     if gameEnded == 1 or gameStarted == 0:
-        screen.blit(pointsHundered, [650, 85])
-        screen.blit(pointsTen, [710, 85])
-        screen.blit(pointsOne, [770, 85])
-        screen.blit(secPointsHundered, [1045, 85])
-        screen.blit(secPointsTen, [1105, 85])
-        screen.blit(secPointsOne, [1165, 85])
+        screen.blit(pointsHundered, [608, 85])
+        screen.blit(pointsTen, [651, 85])
+        screen.blit(pointsOne, [694, 85])
+        screen.blit(secPointsHundered, [1008, 85])
+        screen.blit(secPointsTen, [1051, 85])
+        screen.blit(secPointsOne, [1094, 85])
 
-    screen.blit(lostBallsText, [985, 24])
+    screen.blit(lostBallsText, [965, 20])
 
     # rysowanie startowej ball
     # startBall biala
