@@ -458,6 +458,7 @@ newListsOfBricksP2()
 
 
 while running:
+    dt = clock.get_time() / 1000.0 # delta time w sekundach
     pressedKeys = pygame.key.get_pressed()
 
     if playerMode == "One-player":
@@ -726,7 +727,7 @@ while running:
     # ---BALL---
     # ruch ball
     if gameStarted == 1 and isBallOut == False:
-        ball = ball.move(ballVelX, ballVelY)
+        ball = ball.move(ballVelX * dt * 200, ballVelY * dt * 200)
 
     # odbicie ball od wallTop
     if ball.colliderect(wallTop):
@@ -895,7 +896,7 @@ while running:
                 startBallVelX *= -1
 
         # ruch startowej ball
-        startBall = startBall.move(startBallVelX, startBallVelY)
+        startBall = startBall.move(startBallVelX * dt * 200, startBallVelY * dt * 200)
 
         # odbicie startowej ball od yellow bricks (reszty nie trzeba bo nigdy ich nie zbije)
         for idx, yellowBrick in enumerate(yellowBricksP1):
