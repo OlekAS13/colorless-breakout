@@ -735,6 +735,10 @@ while running:
         canBreakBricks = True
         isPaddleShort = True
 
+        # anti-clip
+        if ball.top < wallTop.bottom:
+            ball.top = wallTop.bottom
+
     # odbicie ball od sciany prawej
     if ball.colliderect(wallRight):
         ballVelX *= -1
@@ -742,6 +746,10 @@ while running:
         if gameEnded == 0:
             wallSound.stop()
             wallSound.play()
+
+        # anti-clip
+        if ball.right > wallRight.left:
+            ball.right = wallRight.left
         
     # odbicie ball od sciany lewej
     if leftWallGlitch == "On":
@@ -751,6 +759,10 @@ while running:
             if gameEnded == 0:
                 wallGlitchSound.stop()
                 wallGlitchSound.play()
+        
+            # anti-clip
+            if ball.left < wallLeft2.right:
+                ball.left = wallLeft2.right
     
     elif leftWallGlitch == "Off":
         if ball.colliderect(wallLeft):
@@ -759,6 +771,10 @@ while running:
             if gameEnded == 0:
                 wallSound.stop()
                 wallSound.play()
+            
+            # anti-clip
+            if ball.left < wallLeft.right:
+                ball.left = wallLeft.right
     
     # odbijanie ball od cegiel
     if canBreakBricks == True:
@@ -860,6 +876,10 @@ while running:
         ballVelY *= -1
         
         canBreakBricks = True
+
+        # anti-clip
+        if ball.bottom > endBar.top:
+            ball.bottom = endBar.top
     
     # ball wypada
     if ball.colliderect(wallBottom):
@@ -953,6 +973,10 @@ while running:
             paddleSound.stop()
             paddleSound.play()
 
+        """# anti-clip
+        if ball.bottom > paddle.top:
+            ball.bottom = paddle.top"""
+
     # odbicie ball od paddle DYNAMIC
     if ball.colliderect(paddle) and ballRotationMode == "Dynamic":
         ballAngle = dynamicBallRotationAngle()
@@ -987,6 +1011,10 @@ while running:
             if not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2 and firstScreenClearedP2 == False:
                 newListsOfBricksP2()
                 firstScreenClearedP2 = True
+            
+        """# anti-clip
+        if ball.bottom > paddle.top:
+            ball.bottom = paddle.top"""
             
     
     # przegrana
