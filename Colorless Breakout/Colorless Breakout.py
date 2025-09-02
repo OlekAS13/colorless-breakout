@@ -152,8 +152,6 @@ def dynamicBallRotationAngle():
 
     return ballAngle
 
-
-
 # funkcja startujaca gre
 def startGame():
     global gameStarted, settingsTextVisible
@@ -547,11 +545,42 @@ while running:
     shortPaddle.centerx = mouse_x
 
     # ograniczenie do scian
-    paddle.left = max(paddle.left, 558)
+    if leftWallGlitch == "On":
+        paddle.left = max(paddle.left, 558)
+        shortPaddle.left = max(shortPaddle.left, 570)
+    elif leftWallGlitch == "Off":
+        paddle.left = max(paddle.left, 588)
+        shortPaddle.left = max(shortPaddle.left, 588)
+    
     paddle.right = min(paddle.right, 1333)
-    shortPaddle.left = max(shortPaddle.left, 570)
     shortPaddle.right = min(shortPaddle.right, 1333)
 
+    # blokowanie myszy przy scianach
+    if leftWallGlitch == "On":
+        if isPaddleShort == False:
+            if paddle.left == 558 and mouse_x < paddle.centerx:
+                pygame.mouse.set_pos(paddle.centerx, pygame.mouse.get_pos()[1])
+
+        elif isPaddleShort == True:
+            if shortPaddle.left == 570 and mouse_x < shortPaddle.centerx:
+                pygame.mouse.set_pos(shortPaddle.centerx, pygame.mouse.get_pos()[1])
+    
+    elif leftWallGlitch == "Off":
+        if isPaddleShort == False:
+            if paddle.left == 588 and mouse_x < paddle.centerx:
+                pygame.mouse.set_pos(paddle.centerx, pygame.mouse.get_pos()[1])
+        
+        elif isPaddleShort == True:
+            if shortPaddle.left == 588 and mouse_x < shortPaddle.centerx:
+                pygame.mouse.set_pos(shortPaddle.centerx, pygame.mouse.get_pos()[1])
+    
+    if isPaddleShort == False:
+        if paddle.right == 1333 and mouse_x > paddle.centerx:
+            pygame.mouse.set_pos(paddle.centerx, pygame.mouse.get_pos()[1])
+    
+    elif isPaddleShort == True:
+        if shortPaddle.right == 1333 and mouse_x > shortPaddle.centerx:
+            pygame.mouse.set_pos(shortPaddle.centerx, pygame.mouse.get_pos()[1]) 
 
 
     # ---RYSOWANIE EKRANU---
