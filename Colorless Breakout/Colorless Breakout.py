@@ -27,14 +27,12 @@ freePlayVisible = 0
 space = 0
 firstScreenClearedP1 = False
 firstScreenClearedP2 = False
-infiniteLives = False
 pointsVisible = 1
 settingsTextVisible = True
 totalBarHits = 0
-ballsAmount = 6
-playerMode = "One-player"
 flashPointsP1 = 0
 flashPointsP2 = 0
+whereStartBall = random.randint(0, 1) # 0 - na dole ekranu, 1 - na gorze ekranu
 
 # statystyki
 pointsP1 = 0
@@ -46,6 +44,10 @@ lostBallsP2 = 1
 settingsOpen = False
 ballRotationMode = "Dynamic"
 leftWallGlitch = "On"
+playerMode = "One-player"
+ballsAmount = 6
+infiniteLives = False
+staticRotationsOnMaxSpeed = "On"
 
 # elementy gry
 paddle = pygame.Rect(960, 1014, 45, 17) # rect paddle
@@ -117,7 +119,11 @@ freesansbold = pygame.font.Font("freesansbold.ttf", 30) # czcionka freesansbold
 
 # ---STARTOWE---
 # startowa ball
-startBall = pygame.Rect(960, 540, 12, 9)
+if whereStartBall == 0:
+    startBall = pygame.Rect(960, 540, 12, 9)
+
+elif whereStartBall == 1:
+    startBall = pygame.Rect(960, 50, 12, 9)    
 startBallSpeed = 7
 
 startBallVelX = math.cos(ballAngleRad) * startBallSpeed
@@ -151,6 +157,8 @@ def dynamicBallRotationAngle():
     ballAngle = 90 - normalizedOffset * 45 # ustawianie kata w przedziale [45, 135] w zaleznosci od offset. Im blizej srodka tym normalizedOffset blizszy zeru wiec kat bedzie bardziej pionowy bo mniej sie odejmie od 90
 
     return ballAngle
+
+
 
 # funkcja startujaca gre
 def startGame():
@@ -510,6 +518,12 @@ while running:
             
             elif pressedKeys[pygame.K_p] and playerMode == "Two-player":
                 playerMode = "One-player"
+
+            elif pressedKeys[pygame.K_c] and staticRotationsOnMaxSpeed == "On":
+                staticRotationsOnMaxSpeed = "Off"
+            
+            elif pressedKeys[pygame.K_c] and staticRotationsOnMaxSpeed == "Off":
+                staticRotationsOnMaxSpeed = "On"
         
         if pressedKeys[pygame.K_g] or event.type == pygame.MOUSEBUTTONDOWN and isBallOut == True and gameStarted == 1: # serwowanie ball
             pygame.time.set_timer(THROW_BALL_EVENT, random.randint(1000, 3000), loops = 1)
@@ -581,8 +595,8 @@ while running:
     elif isPaddleShort == True:
         if shortPaddle.right == 1333 and mouse_x > shortPaddle.centerx:
             pygame.mouse.set_pos(shortPaddle.centerx, pygame.mouse.get_pos()[1]) 
-
-
+    
+    
     # ---RYSOWANIE EKRANU---
     screen.fill("black")
 
@@ -637,25 +651,29 @@ while running:
     
     # tekst otwartych ustawien
     if settingsTextVisible == True and settingsOpen == True:
-        openSettingsText1 = freesansbold.render("Balls amount: {}".format(ballsAmount - 1), True, "white")
-        openSettingsText2 = freesansbold.render("A to toggle", True, "white")
-        openSettingsText3 = freesansbold.render("Mode: {}".format(playerMode), True, "white")
-        openSettingsText4 = freesansbold.render("P to toggle", True, "white")
-        openSettingsText5 = freesansbold.render("Ball rotation: {}".format(ballRotationMode), True, "white")
-        openSettignsText6 = freesansbold.render("B to toggle", True, "white")
-        openSettingsText7 = freesansbold.render("Left wall glitch: {}".format(leftWallGlitch), True, "white")
-        openSettingsText8 = freesansbold.render("L to toggle", True, "white")
-        openSettingsText9 = freesansbold.render("I for infinite lives", True, "white")
+        openSettinsgText1 = freesansbold.render("Static rotation max speed: {}".format(staticRotationsOnMaxSpeed), True, "white")
+        openSettingsText2 = freesansbold.render("C to toggle", True, "white")
+        openSettingsText3 = freesansbold.render("Balls amount: {}".format(ballsAmount - 1), True, "white")
+        openSettingsText4 = freesansbold.render("A to toggle", True, "white")
+        openSettingsText5 = freesansbold.render("Mode: {}".format(playerMode), True, "white")
+        openSettingsText6 = freesansbold.render("P to toggle", True, "white")
+        openSettingsText7 = freesansbold.render("Ball rotation: {}".format(ballRotationMode), True, "white")
+        openSettignsText8 = freesansbold.render("B to toggle", True, "white")
+        openSettingsText9 = freesansbold.render("Left wall glitch: {}".format(leftWallGlitch), True, "white")
+        openSettingsText10 = freesansbold.render("L to toggle", True, "white")
+        openSettingsText11 = freesansbold.render("I for infinite lives", True, "white")
         
-        screen.blit(openSettingsText1, [100, 850])
-        screen.blit(openSettingsText2, [100, 880])
-        screen.blit(openSettingsText3, [100, 790])
-        screen.blit(openSettingsText4, [100, 820])
-        screen.blit(openSettingsText5, [100, 910])
-        screen.blit(openSettignsText6, [100, 940])
-        screen.blit(openSettingsText7, [100, 970])
-        screen.blit(openSettingsText8, [100, 1000])
-        screen.blit(openSettingsText9, [100, 1030])
+        screen.blit(openSettinsgText1, [100, 730])
+        screen.blit(openSettingsText2, [100, 760])
+        screen.blit(openSettingsText3, [100, 850])
+        screen.blit(openSettingsText4, [100, 880])
+        screen.blit(openSettingsText5, [100, 790])
+        screen.blit(openSettingsText6, [100, 820])
+        screen.blit(openSettingsText7, [100, 910])
+        screen.blit(openSettignsText8, [100, 940])
+        screen.blit(openSettingsText9, [100, 970])
+        screen.blit(openSettingsText10, [100, 1000])
+        screen.blit(openSettingsText11, [100, 1030])
         
         
     # ---WYSWIETLANIE STATYSTYK---
@@ -754,9 +772,10 @@ while running:
     
     elif drawPaddle == 1 and isPaddleShort == True and gameEnded == 0: # rysowanie shortPaddle
         pygame.draw.rect(screen, "white", shortPaddle)
-        
+
     # paddle hider
     pygame.draw.rect(screen, "black", (540, 1014, 33, 17))
+        
 
     
 
@@ -783,7 +802,7 @@ while running:
         if gameEnded == 0:
             wallSound.stop()
             wallSound.play()
-
+        
         # anti-clip
         if ball.right > wallRight.left:
             ball.right = wallRight.left
@@ -796,7 +815,7 @@ while running:
             if gameEnded == 0:
                 wallGlitchSound.stop()
                 wallGlitchSound.play()
-        
+            
             # anti-clip
             if ball.left < wallLeft2.right:
                 ball.left = wallLeft2.right
@@ -830,6 +849,15 @@ while running:
 
                     if ball.colliderect(brick):
                         if pointValue >= 5 and speedMode == "paddle":
+                            if staticRotationsOnMaxSpeed == "On":
+                                if ballVelX < 0:
+                                    ballAngle = 235
+                                
+                                elif ballVelX > 0:
+                                    ballAngle = 305
+
+                                ballAngleRad = math.radians(ballAngle)
+
                             changeSpeed(8)
 
                         if sign(ballVelX) != sign(prevBallVelX):
@@ -875,6 +903,15 @@ while running:
 
                     if ball.colliderect(brick):
                         if pointValue >= 5 and speedMode == "paddle":
+                            if staticRotationsOnMaxSpeed == "On":
+                                if ballVelX < 0:
+                                    ballAngle = 235
+                                
+                                elif ballVelX > 0:
+                                    ballAngle = 305
+
+                                ballAngleRad = math.radians(ballAngle)
+
                             changeSpeed(8)
 
                         if sign(ballVelX) != sign(prevBallVelX):
@@ -935,34 +972,73 @@ while running:
 
             startBallVelY *= -1
 
+            # anti-clip
+            if startBall.bottom > bar.top:
+                startBall.bottom = bar.top
+
         # odbicie startowej ball od wallTop
         if startBall.colliderect(wallTop):
             startBallVelY *= -1
 
+            # anti-clip
+            if startBall.top < wallTop.bottom:
+                startBall.top = wallTop.bottom
+
         # odbicie startowej ball od sciany prawej
         if startBall.colliderect(wallRight):
             startBallVelX *= -1
+
+            # anti-clip
+            if startBall.right > wallRight.left:
+                startBall.right = wallRight.left
             
         # odbicie startowej ball od sciany lewej
         if leftWallGlitch == "On":
             if startBall.colliderect(wallLeft2):
                 startBallVelX *= -1
+
+                # anti-clip
+                if startBall.left < wallLeft2.right:
+                    startBall.left = wallLeft2.right
         
         elif leftWallGlitch == "Off":
             if startBall.colliderect(wallLeft):
                 startBallVelX *= -1
 
+                # anti-clip
+                if startBall.left < wallLeft.right:
+                    startBall.left = wallLeft.right
+
         # ruch startowej ball
         startBall = startBall.move(startBallVelX * dt * 200, startBallVelY * dt * 200)
 
-        # odbicie startowej ball od yellow bricks (reszty nie trzeba bo nigdy ich nie zbije)
+        # odbicie startowej ball od yellow bricks i red bricks (reszty nie trzeba bo nigdy ich nie zbije)
         for idx, yellowBrick in enumerate(yellowBricksP1):
             if startBall.colliderect(yellowBrick):
                 startBallVelY *= -1
+
+                # anti-clip
+                if whereStartBall == 0:
+                    if startBall.top < yellowBrick.bottom:
+                        startBall.top = yellowBrick.bottom
+        
+        for idx, redBrick in enumerate(redBricksP1):
+            if startBall.colliderect(redBrick):
+                startBallVelY *= -1
+
+                # anti-clip
+                if whereStartBall == 1:
+                    if startBall.bottom > redBrick.top:
+                        startBall.bottom = redBrick.top
                 
  
-
-
+    # Static ball rotation on max speed
+    if gameStarted == 1 and gameEnded == 0 and staticRotationsOnMaxSpeed == "On":
+        if speedMode == "paddle":
+            ballRotationMode = "Dynamic"
+        
+        elif speedMode == "brick":
+            ballRotationMode = "Static"
 
 
     # odbicie ball od paddle STATIC
@@ -1048,7 +1124,7 @@ while running:
             if not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2 and firstScreenClearedP2 == False:
                 newListsOfBricksP2()
                 firstScreenClearedP2 = True
-            
+        
         """# anti-clip
         if ball.bottom > paddle.top:
             ball.bottom = paddle.top"""
