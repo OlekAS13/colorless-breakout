@@ -1041,8 +1041,53 @@ while running:
             ballRotationMode = "Static"
 
 
-    # odbicie ball od paddle STATIC
-    if ball.colliderect(paddle) and ballRotationMode == "Static":
+        # odbicie ball od paddle STATIC
+    if ball.colliderect(paddle) and ballRotationMode == "Static" and isPaddleShort == False:
+        ballVelX = math.cos(ballAngleRad) * ballSpeed
+        ballVelY = -math.sin(ballAngleRad) * ballSpeed
+
+        if checkOffset() > 0 and ballVelX < 0 and ballVelY > 0: # ball leci z prawej w dol, uderza paddle od prawej strony
+            ballVelX *= -1
+            ballVelY *= -1
+        
+        elif checkOffset() < 0 and ballVelX < 0 and ballVelY > 0: # ball leci z prawej w dol, udeza paddle od lewej strony
+            ballVelY *= -1
+
+        elif checkOffset() < 0 and ballVelX > 0 and ballVelY > 0: # ball leci z lewej w dol, udeza paddle od lewej strony
+            ballVelX *= -1
+            ballVelY *= -1
+
+        elif checkOffset() > 0 and ballVelX > 0 and ballVelY > 0: # ball leci z lewej w dol, udeza paddle od prawej strony
+            ballVelY *= -1
+        
+        canBreakBricks = True
+        
+        # generacja drugiego ekranu cegiel
+        if whichPlayer == 1:
+            if not redBricksP1 and not orangeBricksP1 and not greenBricksP1 and not yellowBricksP1 and firstScreenClearedP1 == False:
+                newListsOfBricksP1()
+                firstScreenClearedP1 = True
+        
+        # ---GRACZ 2---
+        if whichPlayer == 2:
+            if not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2 and firstScreenClearedP2 == False:
+                newListsOfBricksP2()
+                firstScreenClearedP2 = True
+
+        totalBallHits += 1
+
+        if totalBallHits == 3 and speedMode == "paddle": # zmiana predkosci w zaleznosci od odbic o paddle. Predkosc zmienia sie przy kolejnym odbiciu dlatego totalBallHits jest o 1 mniejsze
+            ballSpeed = 5
+
+        elif totalBallHits == 11 and speedMode == "paddle":
+            ballSpeed = 6
+
+        if gameEnded == 0:
+            paddleSound.stop()
+            paddleSound.play()
+        
+    # odbicie ball od shortPaddle STATIC
+    if ball.colliderect(shortPaddle) and ballRotationMode == "Static" and isPaddleShort == True:
         ballVelX = math.cos(ballAngleRad) * ballSpeed
         ballVelY = -math.sin(ballAngleRad) * ballSpeed
 
@@ -1086,12 +1131,9 @@ while running:
             paddleSound.stop()
             paddleSound.play()
 
-        """# anti-clip
-        if ball.bottom > paddle.top:
-            ball.bottom = paddle.top"""
 
     # odbicie ball od paddle DYNAMIC
-    if ball.colliderect(paddle) and ballRotationMode == "Dynamic":
+    if ball.colliderect(paddle) and ballRotationMode == "Dynamic" and isPaddleShort == False:
         ballAngle = dynamicBallRotationAngle()
         ballAngleRad = math.radians(ballAngle)
 
@@ -1125,9 +1167,40 @@ while running:
                 newListsOfBricksP2()
                 firstScreenClearedP2 = True
         
-        """# anti-clip
-        if ball.bottom > paddle.top:
-            ball.bottom = paddle.top"""
+    # odbicie ball od shortPaddle DYNAMIC
+    if ball.colliderect(shortPaddle) and ballRotationMode == "Dynamic" and isPaddleShort == True:
+        ballAngle = dynamicBallRotationAngle()
+        ballAngleRad = math.radians(ballAngle)
+
+        ballVelX = math.cos(ballAngleRad) * ballSpeed
+        ballVelY = -math.sin(ballAngleRad) * ballSpeed
+
+        totalBallHits += 1
+        
+        if totalBallHits == 3 and speedMode == "paddle": # zmiana predkosci w zaleznosci od odbic o paddle. Predkosc zmienia sie przy kolejnym odbiciu dlatego totalBallHits jest o 1 mniejsze
+            ballSpeed = 5
+
+        elif totalBallHits == 11 and speedMode == "paddle":
+            ballSpeed = 6
+
+        canBreakBricks = True
+
+        if gameEnded == 0:
+            paddleSound.stop()
+            paddleSound.play()
+
+        
+        # generacja drugiego ekranu cegiel
+        if whichPlayer == 1:
+            if not redBricksP1 and not orangeBricksP1 and not greenBricksP1 and not yellowBricksP1 and firstScreenClearedP1 == False:
+                newListsOfBricksP1()
+                firstScreenClearedP1 = True
+        
+        # ---GRACZ 2---
+        if whichPlayer == 2:
+            if not redBricksP2 and not orangeBricksP2 and not greenBricksP2 and not yellowBricksP2 and firstScreenClearedP2 == False:
+                newListsOfBricksP2()
+                firstScreenClearedP2 = True
             
     
     # przegrana
